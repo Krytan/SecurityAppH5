@@ -1,4 +1,4 @@
-﻿<Properties StartupConfiguration="{691BE7D3-CD18-4A1B-A386-56B07D8781AB}|https">
+﻿<Properties StartupConfiguration="{691BE7D3-CD18-4A1B-A386-56B07D8781AB}|https" GitUserInfo="UsingGIT">
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.securityH5 FirstBuild="True" />
+  <MonoDevelop.Ide.ItemProperties.securityH5 PreferredExecutionTarget="/Applications/Firefox.app" />
 </Properties>
