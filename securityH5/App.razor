@@ -1,7 +1,19 @@
-﻿<CascadingAuthenticationState>
+﻿@using securityH5.Pages
+<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
-            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+
+                <NotAuthorized>
+                    <Unauthorized></Unauthorized>
+                </NotAuthorized>
+
+                <Authorizing>
+                    <p>Veryfying authentication state...</p>
+                </Authorizing>
+
+
+                </AuthorizeRouteView>
             <FocusOnNavigate RouteData="@routeData" Selector="h1" />
         </Found>
         <NotFound>

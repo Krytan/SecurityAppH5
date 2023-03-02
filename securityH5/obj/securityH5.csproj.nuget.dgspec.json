@@ -43,6 +43,10 @@
               "target": "Package",
               "version": "[4.0.3, )"
             },
+            "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
+              "target": "Package",
+              "version": "[7.0.3, )"
+            },
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.3, )"
@@ -78,6 +82,10 @@
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[7.0.4, )"
+            },
+            "Okta.Sdk": {
+              "target": "Package",
+              "version": "[6.0.5, )"
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",

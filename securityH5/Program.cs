@@ -6,7 +6,11 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using securityH5.Areas.Identity;
 using securityH5.Data;
+using securityH5.Data.Services;
 using securityH5.Areas.Identity.Data;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using securityH5.Areas.Identity.Pages.Account;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,10 +23,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddTransient<UserInfoService>();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddDataProtection();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -42,7 +46,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 app.UseAuthorization();
 
 app.MapControllers();
