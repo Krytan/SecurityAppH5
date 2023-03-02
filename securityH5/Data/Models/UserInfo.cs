@@ -12,13 +12,14 @@ namespace securityH5.Data.Models
     {
         [Key]
         public int Id { get; set; }
-        [PersonalData]
+        
         public string? Title { get; set; }
-        [PersonalData]
-        public string? Message { get; set; }
-        [PersonalData]
-        public virtual string? AccountHash { get; set; }
 
+        public string? Message { get; set; }
+        [Required]
+        public byte[]? AccountHash { get; set; }
+        [Required]
+        public byte[]? Accountsalt { get; set; }
 
     }
 

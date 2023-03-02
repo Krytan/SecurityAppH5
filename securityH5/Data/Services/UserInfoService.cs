@@ -10,6 +10,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using securityH5.Data.Models;
 using YamlDotNet.Core.Tokens;
+using Konscious.Security.Cryptography;
+using System.Security.Cryptography;
+using System.Text;
+using System.Security.Policy;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using securityH5.Data.DTO;
 
 namespace securityH5.Data.Services
 {
@@ -33,55 +39,146 @@ namespace securityH5.Data.Services
             _httpContextAccessor = httpContextAccessor;
 
         }
+
         #endregion
 
         #region Get List of infos
-        public async Task<List<UserInfo>> GetAllInfosAsync(string name)
+        public async Task<List<userRequest>> GetAllInfosAsync(string name)
         {
-
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(name);
-
             var userInfoList = await _appDBContext.UserInfos.ToListAsync();
+            List<userRequest> UserShow = new List<userRequest>();
 
-            for (int i = 0; i < userInfoList.Count; i++)
+            var argon2 = new Argon2id(Encoding.UTF8.GetBytes(name));
+            argon2.DegreeOfParallelism = 8; // four cores
+            argon2.Iterations = 4;
+            argon2.MemorySize = 1024 * 1024; // 1 GB
+
+            foreach (var userInfo in userInfoList)
             {
-                if (BCrypt.Net.BCrypt.Verify(hashedPassword,userInfoList[i].Message))
-                {
-                    // Update the Message property if it matches the name
-                    userInfoList[i].Message = BCrypt.Net.BCrypt.Verify(userInfoList[i].Message, hashedPassword) ? BCrypt.Net.BCrypt.HashPassword(userInfoList[i].Message, hashedPassword) : userInfoList[i].Message;
+                argon2.Salt = userInfo.Accountsalt;
 
-                }
 
-                if (BCrypt.Net.BCrypt.Verify(hashedPassword,userInfoList[i].Title))
+                var computedHash = argon2.GetBytes(16);
+                var isMatched = await Checkvalues(computedHash, userInfo.AccountHash);
+                if (isMatched)
                 {
-                    // Update the Title property if it matches the name
-                    userInfoList[i].Title = BCrypt.Net.BCrypt.HashPassword(hashedPassword);
+                    var accountsalt = userInfo.Accountsalt;
+                    var accountHash = userInfo.AccountHash;
+                    var title = userInfo.Title;
+                    var message = userInfo.Message;
+
+                    var result = await Decryption(accountsalt,accountHash,title,message);
+                    var userReq = new userRequest
+                    {
+                        Title = result.Item1,
+                        Message = result.Item2,
+                    };
+                    UserShow.Add(userReq);
+
                 }
             }
 
 
-            return userInfoList;
+            return UserShow;
+        }
+
+
+
+        public async Task<bool> Checkvalues(byte[] computedHash, byte[]? hashfromdB)
+        {
+
+            return (computedHash.SequenceEqual(hashfromdB));
+
         }
         #endregion
 
         #region Insert UserInfo
-        public async Task<bool> InsertUserInfoAsync(UserInfo userinfo)
+        public async Task<bool> InsertUserInfoAsync(UserInfo userinfo, string name)
         {
 
-                // Generate a salt and hash the item using Bcrypt
+            //For the Hash
+            var salt = new byte[16];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(salt);
+            }
 
-                
-            var hashedpassword = BCrypt.Net.BCrypt.HashPassword(userinfo.AccountHash);
-            var hashedItem = BCrypt.Net.BCrypt.HashPassword(userinfo.Message, hashedpassword);
-                var hashedItem2 = BCrypt.Net.BCrypt.HashPassword(userinfo.Title, hashedpassword);
+            userinfo.Accountsalt = salt;
 
-            userinfo.Message = hashedItem;
-            userinfo.Title = hashedItem2;
-            userinfo.AccountHash = hashedpassword;
+            var argon2 = new Argon2id(Encoding.UTF8.GetBytes(name));
+
+            argon2.Salt = salt;
+            
+            argon2.DegreeOfParallelism = 8; // four cores
+            argon2.Iterations = 4;
+            argon2.MemorySize = 1024 * 1024; // 1 GB
+
+            userinfo.AccountHash =  argon2.GetBytes(16);
+
+            var result = await Encryption(userinfo.Accountsalt,userinfo.AccountHash, title: userinfo.Title, message: userinfo.Message);
+
+            userinfo.Title = result.Item1;
+            userinfo.Message = result.Item2;
 
             await _appDBContext.UserInfos.AddAsync(userinfo);
             await _appDBContext.SaveChangesAsync();
+
             return true;
+
+
+        }
+
+        public async Task<(string, string)> Encryption(byte[] accountSalt, byte[]? accountHash,string? title, string? message)
+        {
+
+            byte[] titleBytes = Encoding.UTF8.GetBytes(title);
+            byte[] messageBytes = Encoding.UTF8.GetBytes(message);
+
+            using (var aes = Aes.Create())
+            {
+                aes.Key = accountHash;
+                aes.IV = accountSalt;
+
+                using (var encryptor = aes.CreateEncryptor())
+                {
+                    byte[] ciphertitleBytes = encryptor.TransformFinalBlock(titleBytes, 0, titleBytes.Length);
+                     title = Convert.ToBase64String(ciphertitleBytes);
+
+                    byte[] ciphermessageBytes = encryptor.TransformFinalBlock(messageBytes, 0, messageBytes.Length);
+                    message = Convert.ToBase64String(ciphermessageBytes);
+
+
+                }
+            }
+
+
+
+
+            return (title,message);
+
+        }
+
+        public async Task<(string?, string?)> Decryption(byte[] accountSalt, byte[]? accountHash, string? title, string? message)
+        {
+            byte[] ciphertitleBytes = Convert.FromBase64String(title);
+            byte[] ciphermessageBytes = Convert.FromBase64String(message);
+
+            using (var aes = Aes.Create())
+            {
+                aes.Key = accountHash;
+                aes.IV = accountSalt;
+
+                using (var decryptor = aes.CreateDecryptor())
+                {
+                    byte[] titleBytes = decryptor.TransformFinalBlock(ciphertitleBytes, 0, ciphertitleBytes.Length);
+                    title = Encoding.UTF8.GetString(titleBytes);
+
+                    byte[] messageBytes = decryptor.TransformFinalBlock(ciphermessageBytes, 0, ciphermessageBytes.Length);
+                    message = Encoding.UTF8.GetString(messageBytes);
+                }
+            }
+
+            return (title, message);
         }
         #endregion
 

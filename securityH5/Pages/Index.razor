@@ -9,18 +9,7 @@
 
 @code{     protected override void OnInitialized()
     {
-        string salt = "asdiasdad";
-        string myPassword = "password";
 
-        MD5 md5 = MD5.Create();
-        byte[] myPasswordHash = System.Text.Encoding.UTF8.GetBytes(myPassword);
-        byte[] myPasswordHashResult = md5.ComputeHash(myPasswordHash);
-
-        string myPasswordHashResultToString = Convert.ToBase64String(myPasswordHashResult);
-
-        salt = BCrypt.Net.BCrypt.GenerateSalt(5);
-        string IncryptHashResult = BCrypt.Net.BCrypt.HashPassword(myPassword, salt);
-        bool matched = BCrypt.Net.BCrypt.Verify("password", IncryptHashResult);
 
     }
 }

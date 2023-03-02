@@ -56,8 +56,10 @@
                 var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
                 var user = authenticationState.User;
 
-                obj.AccountHash = user.FindFirstValue(ClaimTypes.Name);
-                await userInfoService.InsertUserInfoAsync(obj);
+                //obj.AccountHash = user.FindFirstValue(ClaimTypes.Name);
+
+                string name  = user.FindFirstValue(ClaimTypes.Name);
+                await userInfoService.InsertUserInfoAsync(obj,name);
 
 
                 navigationManager.NavigateTo("counter", true);

@@ -325,3 +325,5 @@
 /Users/paullinecarls/Developer/securityH5/securityH5/bin/Debug/net7.0/System.Interactive.Async.dll
 /Users/paullinecarls/Developer/securityH5/securityH5/bin/Debug/net7.0/System.Linq.Async.dll
 /Users/paullinecarls/Developer/securityH5/securityH5/bin/Debug/net7.0/YamlDotNet.dll
+/Users/paullinecarls/Developer/securityH5/securityH5/bin/Debug/net7.0/Konscious.Security.Cryptography.Argon2.dll
+/Users/paullinecarls/Developer/securityH5/securityH5/bin/Debug/net7.0/Konscious.Security.Cryptography.Blake2.dll
