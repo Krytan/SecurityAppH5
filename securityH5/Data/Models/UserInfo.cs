@@ -18,6 +18,10 @@ namespace securityH5.Data.Models
         public string? Message { get; set; }
         [PersonalData]
         public virtual string? AccountHash { get; set; }
+
+
     }
+
+
 
 }

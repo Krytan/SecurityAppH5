@@ -1,56 +1,53 @@
 ﻿@page "/fetchdata"
 @attribute [Authorize]
 @using securityH5.Data
-@inject WeatherForecastService ForecastService
+@using securityH5.Data.Models
+@using securityH5.Data.Services
+@inject UserInfoService userInfoService
+@inject NavigationManager navigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <PageTitle>Weather forecast</PageTitle>
 
-<h1>Weather forecast</h1>
-
-<p>This component demonstrates fetching data from a service.</p>
 <AuthorizeView>
     <Authorized>
-        @if (forecasts == null)
-            {
-                
-            <p><em>Loading...</em></p>
-           }
-            else
-            {
+        <h1>Employee Info</h1>
+        @if (EmpObj is null)
+        {
+            <p><em>Loading... !</em></p>
+        }
+        else
+        {
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Temp. (C)</th>
-                        <th>Temp. (F)</th>
-                        <th>Summary</th>
+                        <th>Tittle</th>
+                        <th>Message</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var forecast in forecasts)
+                    @foreach (var emp in EmpObj)
                     {
                         <tr>
-                            <td>@forecast.Date.ToShortDateString()</td>
-                            <td>@forecast.TemperatureC</td>
-                            <td>@forecast.TemperatureF</td>
-                            <td>@forecast.Summary</td>
+                            <td>@emp.Title</td>
+                            <td>@emp.Message</td>
                         </tr>
                     }
                 </tbody>
             </table>
+        }
+
+
+        @code {
+            List<UserInfo> EmpObj;
+            protected override async Task OnInitializedAsync()
+            {
+                EmpObj = await Task.Run(() => userInfoService.GetAllInfosAsync());
+            }
         }
     </Authorized>
     <NotAuthorized>
         <p>Please login first</p>
     </NotAuthorized>
 </AuthorizeView>
-
-@code {
-    private WeatherForecast[]? forecasts;
-
-    protected override async Task OnInitializedAsync()
-    {
-        forecasts = await ForecastService.GetForecastAsync(DateOnly.FromDateTime(DateTime.Now));
-    }
-}
 

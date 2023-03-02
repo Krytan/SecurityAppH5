@@ -55,7 +55,6 @@
             {
                 var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
                 var user = authenticationState.User;
-                var userName = user.FindFirst(ClaimTypes.Hash)?.Value;
 
                 obj.AccountHash = user.FindFirstValue(ClaimTypes.Name);
                 await userInfoService.InsertUserInfoAsync(obj);
