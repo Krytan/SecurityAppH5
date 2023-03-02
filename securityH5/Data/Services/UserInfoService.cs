@@ -35,24 +35,32 @@ namespace securityH5.Data.Services
         }
         #endregion
 
-        #region Get List of Employees
+        #region Get List of infos
         public async Task<List<UserInfo>> GetAllInfosAsync(string name)
         {
 
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(name);
 
-            foreach (var item in userInfoList)
+            var userInfoList = await _appDBContext.UserInfos.ToListAsync();
+
+            for (int i = 0; i < userInfoList.Count; i++)
             {
-                if (BCrypt.Net.BCrypt.Verify(item.Message, name))
+                if (BCrypt.Net.BCrypt.Verify(hashedPassword,userInfoList[i].Message))
                 {
-                    // Add the decrypted item to the list
-                    decryptedList.Add(BCrypt.Net.BCrypt.HashPassword(item));
+                    // Update the Message property if it matches the name
+                    userInfoList[i].Message = BCrypt.Net.BCrypt.Verify(userInfoList[i].Message, hashedPassword) ? BCrypt.Net.BCrypt.HashPassword(userInfoList[i].Message, hashedPassword) : userInfoList[i].Message;
+
                 }
 
-
+                if (BCrypt.Net.BCrypt.Verify(hashedPassword,userInfoList[i].Title))
+                {
+                    // Update the Title property if it matches the name
+                    userInfoList[i].Title = BCrypt.Net.BCrypt.HashPassword(hashedPassword);
+                }
             }
-        
 
-            return await _appDBContext.UserInfos.ToListAsync();
+
+            return userInfoList;
         }
         #endregion
 
@@ -61,15 +69,15 @@ namespace securityH5.Data.Services
         {
 
                 // Generate a salt and hash the item using Bcrypt
-                var salt = userinfo.AccountHash;
-                salt = BCrypt.Net.BCrypt.GenerateSalt(5);
 
-                var hashedItem = BCrypt.Net.BCrypt.HashPassword(userinfo.Message, salt);
-                var hashedItem2 = BCrypt.Net.BCrypt.HashPassword(userinfo.Title, salt);
+                
+            var hashedpassword = BCrypt.Net.BCrypt.HashPassword(userinfo.AccountHash);
+            var hashedItem = BCrypt.Net.BCrypt.HashPassword(userinfo.Message, hashedpassword);
+                var hashedItem2 = BCrypt.Net.BCrypt.HashPassword(userinfo.Title, hashedpassword);
 
             userinfo.Message = hashedItem;
             userinfo.Title = hashedItem2;
-
+            userinfo.AccountHash = hashedpassword;
 
             await _appDBContext.UserInfos.AddAsync(userinfo);
             await _appDBContext.SaveChangesAsync();

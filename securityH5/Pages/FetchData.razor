@@ -3,6 +3,7 @@
 @using securityH5.Data
 @using securityH5.Data.Models
 @using securityH5.Data.Services
+@using System.Security.Claims
 @inject UserInfoService userInfoService
 @inject NavigationManager navigationManager
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -40,9 +41,15 @@
 
         @code {
             List<UserInfo> EmpObj;
+
             protected override async Task OnInitializedAsync()
             {
-                EmpObj = await Task.Run(() => userInfoService.GetAllInfosAsync());
+                var authenticationState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+                var user = authenticationState.User;
+
+                var name = user.FindFirstValue(ClaimTypes.Name);
+
+                EmpObj = await Task.Run(() => userInfoService.GetAllInfosAsync(name));
             }
         }
     </Authorized>
