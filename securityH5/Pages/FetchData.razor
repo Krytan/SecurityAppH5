@@ -11,7 +11,7 @@
 
 <PageTitle>Weather forecast</PageTitle>
 
-<AuthorizeView>
+<AuthorizeView Roles="Administrator">
     <Authorized>
         <h1>Employee Info</h1>
         @if (EmpObj is null)
@@ -56,7 +56,7 @@
         }
     </Authorized>
     <NotAuthorized>
-        <p>Please login first</p>
+        <p>Only administrator allowed to view this page</p>
     </NotAuthorized>
 </AuthorizeView>
 

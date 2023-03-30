@@ -9,7 +9,7 @@
 
 <PageTitle>Private information</PageTitle>
 
-<AuthorizeView>
+<AuthorizeView Roles="Administrator">
     <Authorized>
 
         <h2>Add Private information</h2>
@@ -72,7 +72,7 @@
 
     </Authorized>
     <NotAuthorized>
-        <p>Please login first</p>
+        <p>Only administrator allowed to view this page</p>
     </NotAuthorized>
 </AuthorizeView>
 

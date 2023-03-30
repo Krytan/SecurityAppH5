@@ -1,4 +1,100 @@
 ﻿<Properties StartupConfiguration="{691BE7D3-CD18-4A1B-A386-56B07D8781AB}|https" GitUserInfo="UsingGIT">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.ItemProperties.securityH5 PreferredExecutionTarget="/Applications/Firefox.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="securityH5/Data/Services/UserInfoService.cs">
+    <Files>
+      <File FileName="securityH5/appsettings.json" Line="4" Column="5" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/Login.cshtml" Line="7" Column="1" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/Login.cshtml.cs" Line="82" Column="1" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/LogOut.cshtml" Line="1" Column="1" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/LoginWith2fa.cshtml" Line="1" Column="1" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/Lockout.cshtml" Line="1" Column="1" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/Logout.cshtml.cs" Line="36" Column="33" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/Register.cshtml.cs" Line="120" Column="51" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/LoginWithRecoveryCode.cshtml" Line="1" Column="1" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/LoginWith2fa.cshtml.cs" Line="34" Column="60" />
+      <File FileName="securityH5/Program.cs" Line="55" Column="1" />
+      <File FileName="securityH5/Pages/Index.razor" Line="12" Column="1" />
+      <File FileName="securityH5/Data/ApplicationDbContext.cs" Line="11" Column="6" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/Register.cshtml" Line="6" Column="1" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/RegisterConfirmation.cshtml.cs" Line="1" Column="1" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/_StatusMessage.cshtml" Line="13" Column="1" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml" Line="1" Column="1" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/ResetPassword.cshtml" Line="1" Column="1" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/ResendEmailConfirmation.cshtml" Line="1" Column="1" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/RegisterConfirmation.cshtml" Line="1" Column="1" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/AccessDenied.cshtml" Line="1" Column="1" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/ConfirmEmail.cshtml" Line="1" Column="1" />
+      <File FileName="securityH5/Areas/Identity/Pages/Account/ConfirmEmailChange.cshtml" Line="1" Column="1" />
+      <File FileName="securityH5/Data/WeatherForecast.cs" Line="3" Column="14" />
+      <File FileName="securityH5/Data/WeatherForecastService.cs" Line="1" Column="1" />
+      <File FileName="securityH5/Pages/FetchData.razor" Line="54" Column="1" />
+      <File FileName="securityH5/Data/Models/UserInfo.cs" Line="12" Column="5" />
+      <File FileName="securityH5/Properties/launchSettings.json" Line="22" Column="70" />
+      <File FileName="securityH5/Controllers/loginController.cs" Line="38" Column="47" />
+      <File FileName="securityH5/Pages/Counter.razor" Line="62" Column="14" />
+      <File FileName="securityH5/Data/Services/UserInfoService.cs" Line="91" Column="1" />
+      <File FileName="securityH5/Pages/Error.cshtml" Line="1" Column="1" />
+      <File FileName="securityH5/Shared/SurveyPrompt.razor" Line="1" Column="1" />
+      <File FileName="securityH5/Areas/Identity/Pages/_ViewStart.cshtml" Line="1" Column="1" />
+      <File FileName="securityH5/Areas/Identity/Pages/_ViewImports.cshtml" Line="1" Column="1" />
+      <File FileName="securityH5/appsettings.Development.json" Line="1" Column="1" />
+      <File FileName="securityH5/ScaffoldingReadMe.txt" Line="1" Column="1" />
+      <File FileName="securityH5/_Imports.razor" Line="1" Column="1" />
+      <File FileName="securityH5/Shared/NavMenu.razor.css" Line="1" Column="1" />
+      <File FileName="securityH5/Shared/MainLayout.razor.css" Line="1" Column="1" />
+      <File FileName="securityH5/Pages/Error.cshtml.cs" Line="1" Column="1" />
+      <File FileName="securityH5/Shared/LoginDisplay.razor" Line="1" Column="1" />
+      <File FileName="securityH5/Data/DTO/userRequest.cs" Line="4" Column="11" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="securityH5" expanded="True">
+            <Node name="securityH5" expanded="True">
+              <Node name="Dependencies" expanded="True" />
+              <Node name="Areas" expanded="True">
+                <Node name="Identity" expanded="True">
+                  <Node name="Pages" expanded="True">
+                    <Node name="Account" expanded="True">
+                      <Node name="Login.cshtml" expanded="True" />
+                      <Node name="LoginWith2fa.cshtml" expanded="True" />
+                      <Node name="LoginWithRecoveryCode.cshtml" expanded="True" />
+                      <Node name="LogOut.cshtml" expanded="True" />
+                      <Node name="Register.cshtml" expanded="True" />
+                      <Node name="RegisterConfirmation.cshtml" expanded="True" />
+                    </Node>
+                  </Node>
+                </Node>
+              </Node>
+              <Node name="Data" expanded="True">
+                <Node name="DTO" expanded="True" />
+                <Node name="Models" expanded="True" />
+                <Node name="Services" expanded="True">
+                  <Node name="UserInfoService.cs" selected="True" />
+                </Node>
+              </Node>
+              <Node name="Pages" expanded="True">
+                <Node name="Error.cshtml" expanded="True" />
+              </Node>
+              <Node name="Properties" expanded="True" />
+              <Node name="Shared" expanded="True">
+                <Node name="MainLayout.razor" expanded="True" />
+                <Node name="NavMenu.razor" expanded="True" />
+              </Node>
+              <Node name="appsettings.json" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
 </Properties>
